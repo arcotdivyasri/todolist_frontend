@@ -33,8 +33,8 @@ function App() {
 
   // DELETE
   function deleteTodo(text) {
-    fetch("https://todolist-backend-39qv.onrender.com/todos", {
-      method: "POST",
+    fetch("https://todolist-backend-e30t.onrender.com/todos", {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json"
       },
@@ -44,7 +44,6 @@ function App() {
       .then(() => getTodos())
       .catch(err => console.log(err));
   }
-
   useEffect(() => {
     getTodos();
   }, []);
