@@ -4,9 +4,11 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
 
+  const BASE_URL = "https://todolist-backend-39qv.onrender.com";
+
   // GET TODOS
   function getTodos() {
-    fetch("https://todolist-backend-39qv.onrender.com/todos")
+    fetch(`${BASE_URL}/todos`)
       .then((res) => res.json())
       .then((data) => setTodos(data))
       .catch((err) => console.log(err));
@@ -16,7 +18,7 @@ function App() {
   function addTodo() {
     if (text.trim() === "") return;
 
-    fetch("https://todolist-backend-39qv.onrender.com/todos", {
+    fetch(`${BASE_URL}/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -32,13 +34,9 @@ function App() {
   }
 
   // DELETE TODO
-  function deleteTodo(text) {
-    fetch("https://todolist-backend-39qv.onrender.com/delete", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ text: text })
+  function deleteTodo(id) {
+    fetch(`${BASE_URL}/todos/${id}`, {
+      method: "DELETE"
     })
       .then((res) => res.json())
       .then(() => {
@@ -67,11 +65,11 @@ function App() {
       </button>
 
       <ul>
-        {todos.map((t, i) => (
-          <li key={i}>
+        {todos.map((t) => (
+          <li key={t._id}>
             {t.text}
 
-            <button onClick={() => deleteTodo(t.text)}>
+            <button onClick={() => deleteTodo(t._id)}>
               Delete
             </button>
           </li>
